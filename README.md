@@ -48,9 +48,6 @@ A modern, full-stack expense tracking application built with the MERN stack (Mon
    cp env.example .env
    
    # Edit .env with your MongoDB connection string
-   # For local MongoDB: mongodb://localhost:27017/expense-tracker
-   # For MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
-   cd ..
    ```
 
 5. **Set up Google OAuth**
