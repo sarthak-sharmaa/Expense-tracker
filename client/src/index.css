@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-primary-500 to-purple-600 min-h-screen text-gray-800;
+    overscroll-behavior: none;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-200 inline-block text-center cursor-pointer;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .btn-danger {
+    @apply bg-red-500 text-white hover:bg-red-600 hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 mb-5 transition-transform duration-200 hover:-translate-y-1;
+  }
+  
+  .form-group {
+    @apply mb-5;
+  }
+  
+  .form-group label {
+    @apply block mb-2 font-semibold text-gray-700;
+  }
+  
+  .form-control {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors duration-200 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200;
+  }
+  
+  .expense-item {
+    @apply flex justify-between items-center p-4 border border-gray-200 rounded-lg mb-3 bg-white transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+  
+  .expense-amount {
+    @apply text-lg font-bold text-red-500;
+  }
+  
+  .expense-category {
+    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase mt-1;
+  }
+  
+  .category-food { @apply bg-expense-food text-white; }
+  .category-transport { @apply bg-expense-transport text-white; }
+  .category-entertainment { @apply bg-expense-entertainment text-white; }
+  .category-shopping { @apply bg-expense-shopping text-white; }
+  .category-bills { @apply bg-expense-bills text-white; }
+  .category-other { @apply bg-expense-other text-white; }
+  
+  .stats-card {
+    @apply text-center p-6;
+  }
+  
+  .stats-number {
+    @apply text-3xl font-bold text-primary-500 mb-2;
+  }
+  
+  .stats-label {
+    @apply text-gray-500 text-sm uppercase tracking-wide;
+  }
+  
+  .loading {
+    @apply text-center py-10 text-gray-500;
+  }
+  
+  .error {
+    @apply bg-red-500 text-white p-4 rounded-lg mb-5;
+  }
+  
+  .success {
+    @apply bg-green-500 text-white p-4 rounded-lg mb-5;
+  }
+} 

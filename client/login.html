@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Expense Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <div class="login-card">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">💰 Expense Tracker</h1>
+            <p class="text-gray-600">Sign in to manage your expenses</p>
+        </div>
+
+        <div id="loginSection">
+            <div class="mb-6">
+                <div id="g_id_onload"
+                     data-client_id="197314220333-egcv5oagr6qebqvv0tr8aae08dp3qh63.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin w-full"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="userInfo" class="hidden">
+            <div class="text-center mb-6">
+                <img id="userAvatar" class="w-16 h-16 rounded-full mx-auto mb-4" src="" alt="User Avatar">
+                <h2 id="userName" class="text-xl font-semibold text-gray-800 mb-2"></h2>
+                <p id="userEmail" class="text-gray-600 mb-6"></p>
+            </div>
+            <button onclick="logout()" class="w-full bg-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-600 transition-colors mb-4">
+                Sign Out
+            </button>
+            <button onclick="goToApp()" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                Go to Expense Tracker
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Handle Google Sign-In
+        function handleCredentialResponse(response) {
+            // Decode the JWT token
+            const responsePayload = decodeJwtResponse(response.credential);
+            
+            // Store user info
+            localStorage.setItem('user', JSON.stringify({
+                name: responsePayload.name,
+                email: responsePayload.email,
+                picture: responsePayload.picture,
+                sub: responsePayload.sub
+            }));
+            
+            showUserInfo(responsePayload);
+        }
+
+        // Decode JWT token
+        function decodeJwtResponse(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        // Show user info
+        function showUserInfo(user) {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('userInfo').classList.remove('hidden');
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').src = user.picture;
+        }
+
+
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('user');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('userInfo').classList.add('hidden');
+        }
+
+        // Go to main app
+        function goToApp() {
+            window.location.href = '/';
+        }
+
+        // Check if user is already logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                showUserInfo(userData);
+            }
+        };
+    </script>
+</body>
+</html> 
